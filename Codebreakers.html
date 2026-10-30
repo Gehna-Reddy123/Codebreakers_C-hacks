@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#073d32">
+<title>Replate — Give food a second life</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#073d32;
+--bg2:#0a4a3d;
+--panel:rgba(255,255,255,.075);
+--panel2:rgba(255,255,255,.11);
+--gold:#e6c783;
+--gold2:#f3dda8;
+--text:#f7f4eb;
+--muted:#b9cbc2;
+--line:rgba(230,199,131,.22);
+--red:#ff8f82;
+--green:#a8d9b4;
+--shadow:0 18px 55px #001e183d
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+margin:0;
+background:radial-gradient(ellipse at 80% 0%,#17614b 0,transparent 38%),linear-gradient(145deg,#062f28,#0a493b 65%,#07382f);
+color:var(--text);
+font-family:Manrope,Arial,sans-serif;
+min-height:100vh
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+
+.topline{
+position:fixed;
+z-index:30;
+top:0;
+left:0;
+height:3px;
+background:var(--gold);
+width:0
+}
+
+.nav{
+position:sticky;
+top:0;
+z-index:20;
+display:flex;
+align-items:center;
+gap:18px;
+padding:14px clamp(14px,4vw,55px);
+background:#062f28eF;
+backdrop-filter:blur(18px);
+border-bottom:1px solid var(--line)
+}
+
+.brand{
+font:700 27px Fraunces,serif;
+color:var(--gold);
+white-space:nowrap
+}
+.brand span{color:white}
+
+.tabs{
+display:flex;
+gap:5px;
+align-items:center;
+flex:1;
+overflow:auto;
+scrollbar-width:none
+}
+
+.tabs button{
+background:none;
+border:0;
+color:var(--muted);
+padding:10px 12px;
+border-radius:30px;
+white-space:nowrap;
+font-size:12px;
+font-weight:800
+}
+
+.tabs button.active,
+.tabs button:hover{
+background:#e6c7831c;
+color:var(--gold2)
+}
+
+.navright{
+display:flex;
+align-items:center;
+gap:12px
+}
+
+.points{
+border:1px solid var(--line);
+padding:8px 13px;
+border-radius:30px;
+color:var(--gold2);
+font-weight:800;
+white-space:nowrap;
+font-size:13px
+}
+
+.profilebtn{
+width:39px;
+height:39px;
+border-radius:50%;
+border:1px solid var(--gold);
+background:#e6c78320;
+color:var(--gold2);
+font-size:18px
+}
+
+.wrap{
+max-width:1200px;
+margin:auto;
+padding:36px clamp(16px,4vw,48px) 80px
+}
+
+.page{
+display:none;
+animation:fade .3s ease
+}
+
+.page.active{display:block}
+
+@keyframes fade{
+from{opacity:.4;transform:translateY(7px)}
+to{opacity:1;transform:none}
+}
+
+h1,h2,h3{
+font-family:Fraunces,Georgia,serif;
+font-weight:600
+}
+
+h1{
+font-size:clamp(42px,6vw,76px);
+line-height:1.02;
+letter-spacing:-2px;
+margin:14px 0 18px
+}
+
+h2{
+font-size:clamp(29px,4vw,42px);
+margin:0 0 12px
+}
+
+h3{
+font-size:22px;
+margin:0 0 8px
+}
+
+.eyebrow{
+color:var(--gold);
+font-size:11px;
+font-weight:800;
+letter-spacing:2px;
+text-transform:uppercase
+}
+
+.muted{color:var(--muted)}
+.gold{color:var(--gold2)}
+
+.hero{
+display:grid;
+grid-template-columns:1.25fr .75fr;
+gap:35px;
+align-items:center;
+min-height:440px
+}
+
+.hero p{
+max-width:570px;
+color:var(--muted);
+line-height:1.8
+}
+
+.glass{
+background:linear-gradient(135deg,#ffffff14,#ffffff08);
+border:1px solid var(--line);
+border-radius:24px;
+box-shadow:var(--shadow);
+backdrop-filter:blur(15px);
+padding:24px
+}
+
+.ingredientbox{
+display:flex;
+gap:8px;
+background:#f8f5ed;
+border-radius:50px;
+padding:7px;
+margin:25px 0 12px;
+max-width:620px
+}
+
+.ingredientbox input{
+border:0;
+outline:0;
+background:transparent;
+color:#173d31;
+min-width:0;
+flex:1;
+padding:10px 16px
+}
+
+.ingredientbox button,
+.primary{
+border:0;
+background:var(--gold);
+color:#18382e;
+border-radius:40px;
+padding:13px 21px;
+font-weight:900
+}
+
+.primary:hover{
+background:var(--gold2);
+transform:translateY(-1px)
+}
+
+.chips{
+display:flex;
+flex-wrap:wrap;
+gap:8px
+}
+
+.chip{
+border:1px solid var(--line);
+background:#ffffff0c;
+color:var(--gold2);
+padding:8px 13px;
+border-radius:30px;
+font-size:12px
+}
+
+.chip:hover{background:#e6c78320}
+
+.ingredient-list{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+margin-top:18px;
+min-height:36px
+}
+
+.foodtag{
+background:#e6c78320;
+border:1px solid var(--line);
+padding:7px 10px;
+border-radius:20px;
+cursor:pointer
+}
+
+.foodtag:hover{transform:translateY(-3px)}
+
+.progress-card{
+text-align:center;
+max-width:350px;
+margin:auto
+}
+
+.ring{
+width:180px;
+height:180px;
+border-radius:50%;
+margin:12px auto 20px;
+display:grid;
+place-items:center;
+background:conic-gradient(var(--gold) var(--progress,0%),#ffffff1b 0);
+position:relative
+}
+
+.ring:before{
+content:"";
+position:absolute;
+inset:12px;
+background:#0a4035;
+border-radius:50%
+}
+
+.ringinner{z-index:1}
+
+.ring strong{
+font:700 38px Fraunces;
+display:block
+}
+
+.ring small{color:var(--muted)}
+.level{color:var(--gold2);font-weight:800}
+
+.sectionhead{
+display:flex;
+justify-content:space-between;
+gap:15px;
+align-items:end;
+margin:38px 0 18px
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:16px
+}
+
+.grid.two{grid-template-columns:repeat(2,1fr)}
+
+.card{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:20px;
+padding:20px;
+transition:transform .2s,border-color .2s
+}
+
+.card:hover{
+border-color:#e6c78380;
+transform:translateY(-3px)
+}
+
+.card p{
+color:var(--muted);
+font-size:13px;
+line-height:1.7
+}
+
+.card .meta{
+font-size:11px;
+color:var(--gold);
+font-weight:800;
+letter-spacing:.5px
+}
+
+.card button{margin-top:10px}
+
+.action{
+border:1px solid var(--line);
+background:#e6c78316;
+color:var(--gold2);
+padding:10px 15px;
+border-radius:30px;
+font-weight:800
+}
+
+.action:hover{background:#e6c7832b}
+
+.field{
+width:100%;
+padding:14px 16px;
+border-radius:13px;
+border:1px solid var(--line);
+background:#062f28a8;
+color:white;
+outline:none;
+margin:8px 0
+}
+
+.field::placeholder{color:#a9bcb2}
+
+.row{
+display:flex;
+gap:10px;
+align-items:center;
+flex-wrap:wrap
+}
+
+.row .field{flex:1;min-width:160px}
+
+.recipe-steps{
+padding-left:22px;
+color:var(--muted);
+line-height:2
+}
+
+.recipe-steps li{padding-left:5px}
+.recipe-steps input{accent-color:var(--gold);margin-right:9px}
+
+.bar{
+height:8px;
+background:#ffffff19;
+border-radius:20px;
+overflow:hidden
+}
+
+.bar span{
+display:block;
+height:100%;
+background:var(--gold);
+border-radius:20px
+}
+
+.stat{
+font:700 30px Fraunces;
+color:var(--gold2)
+}
+
+.statlabel{
+font-size:11px;
+color:var(--muted);
+text-transform:uppercase;
+letter-spacing:1px
+}
+
+.game-item{
+font:600 28px Fraunces;
+text-align:center;
+padding:28px 8px
+}
+
+.bins{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px
+}
+
+.bin{
+padding:20px 8px;
+text-align:center;
+border:1px solid var(--line);
+border-radius:16px;
+background:#ffffff0a;
+color:var(--text);
+font-weight:800
+}
+
+.bin:hover{background:#e6c78325}
+
+.bin small{
+display:block;
+color:var(--muted);
+font-weight:500;
+margin-top:5px
+}
+
+.fresh{
+height:8px;
+border-radius:10px;
+background:#ffffff20;
+overflow:hidden;
+margin:8px 0
+}
+
+.fresh span{
+height:100%;
+display:block;
+background:var(--green)
+}
+
+.lock{font-size:45px}
+
+.notice{
+padding:13px 16px;
+border:1px solid var(--line);
+border-radius:14px;
+background:#e6c78312;
+color:var(--gold2);
+font-size:13px
+}
+
+.adpreview{
+border:1px dashed var(--gold);
+border-radius:15px;
+padding:20px;
+text-align:center;
+color:var(--gold2);
+background:#e6c7830d
+}
+
+.sponsor{
+margin-top:20px;
+padding:12px;
+text-align:center;
+border:1px solid #e6c78330;
+border-radius:13px;
+color:#c7b98e;
+font-size:11px
+}
+
+.hidden{display:none!important}
+
+.toast{
+position:fixed;
+bottom:22px;
+left:50%;
+transform:translateX(-50%) translateY(100px);
+background:var(--gold);
+color:#173b30;
+padding:13px 20px;
+border-radius:30px;
+font-weight:900;
+z-index:50;
+transition:.3s;
+box-shadow:var(--shadow)
+}
+
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+.confetti{
+position:fixed;
+inset:0;
+pointer-events:none;
+z-index:40;
+overflow:hidden
+}
+
+.confetti i{
+position:absolute;
+width:8px;
+height:13px;
+background:var(--gold);
+top:-20px;
+animation:fall 1.8s linear forwards
+}
+
+@keyframes fall{
+to{transform:translateY(110vh) rotate(650deg);opacity:0}
+}
+
+.footer{
+border-top:1px solid var(--line);
+margin-top:60px;
+padding-top:22px;
+color:var(--muted);
+font-size:12px;
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap
+}
+
+@media(max-width:850px){
+.nav{flex-wrap:wrap;gap:8px}
+.tabs{order:3;flex-basis:100%}
+.hero{grid-template-columns:1fr;min-height:0}
+.progress-card{max-width:100%;width:100%}
+.grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:560px){
+.wrap{padding-top:25px}
+.grid,.grid.two{grid-template-columns:1fr}
+.bins{grid-template-columns:repeat(2,1fr)}
+.nav{padding:10px 13px}
+.brand{font-size:24px}
+.points{font-size:11px;padding:7px 9px}
+.hero{gap:20px}
+.ingredientbox{border-radius:18px}
+.ingredientbox button{padding:11px 14px}
+.sectionhead{align-items:start;flex-direction:column}
+}
+
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{
+scroll-behavior:auto!important;
+animation-duration:.01ms!important;
+transition-duration:.01ms!important
+}
+}
+</style>
+</head>
+
+<body>
+
+<div class="topline" id="topline"></div>
+
+<nav class="nav">
+<div class="brand">
+re<span>plate</span>
+<small style="font:600 9px Manrope;display:block;letter-spacing:2px;color:var(--muted)">GIVE FOOD A SECOND LIFE</small>
+</div>
+
+<div class="tabs" id="tabs">
+<button class="active" data-page="cook">Cook</button>
+<button data-page="sort">Sort game</button>
+<button data-page="basket">Basket</button>
+<button data-page="progress">Progress</button>
+<button data-page="reuse">Reuse & recycle</button>
+<button data-page="tools">Tools</button>
+<button data-page="ads">For advertisers</button>
+<button data-page="profile">Profile</button>
+</div>
+
+<div class="navright">
+<div class="points">✦ <span id="navPoints">0</span> pts</div>
+<button class="profilebtn" id="profileShortcut" aria-label="Profile">🔒</button>
+</div>
+</nav>
+
+<main class="wrap">
+
+<!-- COOK PAGE -->
+<section class="page active" id="cook">
+
+<div class="hero">
+<div>
+<div class="eyebrow">A little less waste. A lot more good.</div>
+
+<h1>Cook what you<br><span class="gold">already have.</span></h1>
+
+<p>Tell Replate what's in your kitchen. We'll help you turn everyday ingredients and leftovers into something delicious — while earning points for every food-saving action.</p>
+
+<div class="ingredientbox">
+<input id="ingredientInput" placeholder="What's in your kitchen? e.g. rice, tomato" aria-label="Ingredients">
+<button onclick="addIngredients()">Add ingredients</button>
+</div>
+
+<div class="chips" id="chips"></div>
+<div class="ingredient-list" id="ingredientList"></div>
+</div>
+
+<div class="glass progress-card">
+<div class="eyebrow">Your impact starts here</div>
+<div class="ring" id="ring">
+<div class="ringinner">
+<strong id="heroPoints">0</strong>
+<small>POINTS</small>
+</div>
+</div>
+<div class="level" id="heroLevel">Seedling</div>
+<p class="muted">Every small action adds up.</p>
+<div id="emojiList" class="ingredient-list" style="justify-content:center"></div>
+</div>
+</div>
+
+<div class="sectionhead">
+<div>
+<div class="eyebrow">Made for your kitchen</div>
+<h2>Recipes that fit your ingredients</h2>
+</div>
+<span class="muted" id="recipeCount">12 recipes · Top matches</span>
+</div>
+
+<div class="grid" id="recipeGrid"></div>
+
+<div class="sectionhead">
+<div>
+<div class="eyebrow">Nothing goes to waste</div>
+<h2>Leftover rescue</h2>
+<p class="muted">Give yesterday's food a delicious second life.</p>
+</div>
+</div>
+
+<div class="glass">
+<div class="row">
+<input class="field" id="leftoverInput" placeholder="What's left over? e.g. dal, roti, rice">
+<button class="primary" onclick="findLeftovers()">Find ideas</button>
+</div>
+<div class="grid two" id="leftoverResults"></div>
+</div>
+
+<div class="sectionhead">
+<h2>Did you know?</h2>
+<button class="action" onclick="nextFact()">Another fact ↗</button>
+</div>
+
+<div class="notice" id="fact"></div>
+<div class="sponsor">SPONSORED SPACE · Your brand could support food-saving habits</div>
+</section>
+
+<!-- SORT GAME -->
+<section class="page" id="sort">
+<div class="eyebrow">Play for the planet</div>
+<h1>Sort it <span class="gold">right.</span></h1>
+<p class="muted">Ten quick rounds. Six seconds each. Choose the best destination for every item.</p>
+
+<div class="glass" style="max-width:800px;margin:25px auto">
+<div class="row" style="justify-content:space-between">
+<b id="round">Round 1 / 10</b>
+<span>Score: <b id="gameScore">0</b></span>
+<span>Combo: <b id="combo">0</b> 🔥</span>
+</div>
+
+<div class="bar" style="margin:15px 0">
+<span id="timerBar" style="width:100%"></span>
+</div>
+
+<div class="game-item" id="gameItem">🍌 Banana peel</div>
+<p class="muted" style="text-align:center" id="gameHint">Where should this go?</p>
+
+<div class="bins">
+<button class="bin" onclick="answerSort('Compost')">🌱 Compost<small>Food scraps</small></button>
+<button class="bin" onclick="answerSort('Recycle')">♻️ Recycle<small>Accepted materials</small></button>
+<button class="bin" onclick="answerSort('Reuse')">🔁 Reuse<small>Use it again</small></button>
+<button class="bin" onclick="answerSort('Landfill')">🗑️ Landfill<small>Last resort</small></button>
+</div>
+
+<div class="row" style="justify-content:center;margin-top:20px">
+<button class="primary" id="startGame" onclick="startGame()">Start 10-round game</button>
+</div>
+
+<p class="muted" style="text-align:center;font-size:12px">Sorting rules vary by location. Check your local waste guidance.</p>
+</div>
+</section>
+
+<!-- BASKET -->
+<section class="page" id="basket">
+<div class="eyebrow">Plan before you shop</div>
+<h1>Your smart <span class="gold">basket.</span></h1>
+<p class="muted">Plan around your next shopping trip and spot what needs using first.</p>
+
+<div class="glass">
+<h3>Days until your next shop</h3>
+<div class="row">
+<input id="shopDays" type="range" min="1" max="14" value="5" style="flex:1;accent-color:var(--gold)" oninput="renderBasket()">
+<strong id="daysLabel" class="gold">5 days</strong>
+</div>
+
+<div class="grid two" id="basketGrid"></div>
+
+<div class="sectionhead">
+<div>
+<div class="eyebrow">Your plan</div>
+<h2 id="riskTitle">Waste risk: —</h2>
+<p class="muted" id="riskText"></p>
+</div>
+<button class="primary" onclick="saveBasket()">Save basket plan · +20 pts</button>
+</div>
+</div>
+</section>
+
+<!-- PROGRESS -->
+<section class="page" id="progress">
+<div class="eyebrow">Your good habits, adding up</div>
+<h1>Small actions. <span class="gold">Big impact.</span></h1>
+
+<div class="grid" id="statsGrid"></div>
+
+<div class="sectionhead">
+<div>
+<h2>Your next milestone</h2>
+<p class="muted">Earn points to unlock your creator profile at 500.</p>
+</div>
+</div>
+
+<div class="glass">
+<div class="row" style="justify-content:space-between">
+<b id="progressLevel">Seedling</b>
+<b class="gold" id="goalText">0 / 500 points</b>
+</div>
+
+<div class="bar" style="margin:15px 0">
+<span id="goalBar"></span>
+</div>
+
+<div id="missionGrid" class="grid two"></div>
+</div>
+
+<div class="sectionhead"><h2>Creator corner</h2></div>
+<div id="creatorArea" class="glass"></div>
+</section>
+
+<!-- REUSE -->
+<section class="page" id="reuse">
+<div class="eyebrow">Give everyday things another life</div>
+<h1>Reuse more. <span class="gold">Waste less.</span></h1>
+<p class="muted">Enter an item, or a few separated by commas, for practical next steps.</p>
+
+<div class="glass">
+<div class="row">
+<input class="field" id="reuseInput" placeholder="plastic bottle, old t-shirt, battery">
+<button class="primary" onclick="findReuse()">Find ideas</button>
+</div>
+<div class="grid two" id="reuseResults"></div>
+</div>
+
+<div class="sectionhead"><h2>Quick inspiration</h2></div>
+<div class="grid" id="reuseIdeas"></div>
+</section>
+
+<!-- TOOLS -->
+<section class="page" id="tools">
+<div class="eyebrow">A safer, smarter kitchen</div>
+<h1>Useful kitchen <span class="gold">tools.</span></h1>
+<p class="muted">A few practical tools that can help with safe prep and food storage.</p>
+<div class="grid" id="toolsGrid"></div>
+<div class="sponsor">SPONSORED TOOL SPOTLIGHT · Support Replate by featuring a useful product</div>
+</section>
+
+<!-- ADVERTISERS -->
+<section class="page" id="ads">
+<div class="eyebrow">Partner with Replate</div>
+<h1>Make your brand <span class="gold">part of the good.</span></h1>
+<p class="muted">Reach people building thoughtful kitchen habits. Choose a placement and campaign length to preview a sample booking.</p>
+
+<div class="grid two">
+<div class="glass">
+<h3>Choose your campaign</h3>
+<label class="muted">Ad placement</label>
+
+<select class="field" id="adSlot" onchange="updateAd()">
+<option value="4999">Homepage banner — ₹4,999 / week</option>
+<option value="7999">Sponsored recipe — ₹7,999 / week</option>
+<option value="2999">Tool spotlight — ₹2,999 / week</option>
+</select>
+
+<label class="muted">Campaign length: <b id="weeksLabel" class="gold">1 week</b></label>
+<input id="weeks" type="range" min="1" max="12" value="1" style="width:100%;accent-color:var(--gold)" oninput="updateAd()">
+
+<div class="sectionhead">
+<span class="muted">Estimated total</span>
+<strong class="stat" id="adTotal">₹4,999</strong>
+</div>
+
+<button class="primary" onclick="bookAd()">Enquire about this slot</button>
+
+<p class="muted" style="font-size:11px">Sample rates for demonstration. Replace with confirmed inventory and terms before launch.</p>
+</div>
+
+<div class="glass">
+<div class="eyebrow">Live preview</div>
+<div class="adpreview">
+<div class="eyebrow">PARTNER SPOTLIGHT</div>
+<h2 id="previewTitle">A better kitchen starts here.</h2>
+<p>Reach a community choosing to waste less and make more.</p>
+<small>YOUR BRAND · SPONSORED</small>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PROFILE -->
+<section class="page" id="profile">
+<div class="eyebrow">Your Replate identity</div>
+<h1>Your profile. <span class="gold">Your impact.</span></h1>
+<div id="profileContent" class="glass"></div>
+</section>
+
+<footer class="footer">
+<span>© 2026 Replate · Give food a second life.</span>
+<span>Made for better everyday habits · Estimates are illustrative.</span>
+</footer>
+
+</main>
+
+<div class="toast" id="toast"></div>
+<div class="confetti" id="confetti"></div>
+
+<script>
+
+// RECIPES
+const recipes=[
+{name:"Tomato egg rice",emoji:"🍅",items:["rice","egg","tomato"],time:"15 min",steps:["Warm cooked rice in a pan.","Add chopped tomato and cook until soft.","Stir in beaten egg and cook through.","Season and serve warm."]},
+{name:"Veggie fried rice",emoji:"🥕",items:["rice","carrot","peas","onion"],time:"15 min",steps:["Chop the vegetables.","Stir-fry vegetables until tender.","Add rice and mix well.","Season to taste and serve."]},
+{name:"Tomato toast",emoji:"🍞",items:["bread","tomato","cheese"],time:"10 min",steps:["Toast the bread lightly.","Top with sliced tomato and cheese.","Warm until the cheese melts.","Serve immediately."]},
+{name:"Egg bhurji",emoji:"🍳",items:["egg","onion","tomato"],time:"12 min",steps:["Chop onion and tomato.","Cook onion until soft, then add tomato.","Add beaten eggs and stir until cooked.","Serve with bread or roti."]},
+{name:"Banana pancakes",emoji:"🥞",items:["banana","egg","flour"],time:"15 min",steps:["Mash the banana in a bowl.","Mix in egg and flour.","Cook small portions in a lightly oiled pan.","Flip and cook both sides."]},
+{name:"Chickpea salad",emoji:"🥗",items:["chickpeas","tomato","onion","lemon"],time:"10 min",steps:["Rinse cooked chickpeas.","Chop tomato and onion.","Mix with chickpeas and lemon.","Season and serve."]},
+{name:"Potato hash",emoji:"🥔",items:["potato","onion","peas"],time:"20 min",steps:["Dice the potato into small pieces.","Cook until tender and lightly golden.","Add onion and peas.","Season and serve hot."]},
+{name:"Cheesy veg sandwich",emoji:"🥪",items:["bread","cheese","tomato","onion"],time:"10 min",steps:["Layer vegetables and cheese on bread.","Close the sandwich.","Toast in a pan until crisp.","Cut and serve."]},
+{name:"Dal soup",emoji:"🍲",items:["dal","tomato","onion"],time:"15 min",steps:["Warm leftover dal in a saucepan.","Add chopped tomato and onion.","Add water to reach your preferred consistency.","Simmer until hot throughout."]},
+{name:"Roti quesadilla",emoji:"🫓",items:["roti","cheese","tomato"],time:"8 min",steps:["Place cheese and tomato on half a roti.","Fold the roti over.","Toast both sides in a pan.","Cut into wedges and serve."]},
+{name:"Quick veggie pasta",emoji:"🍝",items:["pasta","tomato","onion","cheese"],time:"20 min",steps:["Cook pasta according to its packet.","Cook onion and tomato until soft.","Toss pasta through the sauce.","Top with cheese and serve."]},
+{name:"Apple cinnamon oats",emoji:"🥣",items:["oats","apple","milk"],time:"8 min",steps:["Add oats and milk to a saucepan.","Stir over low heat until creamy.","Add chopped apple and cinnamon.","Cook until the apple softens."]}
+];
+
+const emojis={
+rice:"🍚",tomato:"🍅",egg:"🥚",bread:"🍞",
+banana:"🍌",dal:"🍲",roti:"🫓",potato:"🥔",
+onion:"🧅",carrot:"🥕",peas:"🟢",cheese:"🧀",
+chickpeas:"🫘",lemon:"🍋",pasta:"🍝",oats:"🥣",
+milk:"🥛",chicken:"🍗"
+};
+
+const facts=[
+"Roughly one-third of food produced globally is lost or wasted. Small household habits can make a difference.",
+"Planning meals before shopping can help prevent forgotten ingredients.",
+"Storing food in clear, labelled containers can make leftovers easier to spot.",
+"Using ripe fruit in smoothies or baking can help make the most of it.",
+"A simple 'eat me first' shelf can help bring older ingredients to your attention."
+];
+
+const defaults={
+points:0,meals:0,kg:0,money:0,streak:0,
+ingredients:[],completed:{},basketSaved:false,
+blog:[],profile:{name:"",bio:"",avatar:"🌿"},lastDay:""
+};
+
+let state;
+try{
+state={...defaults,...JSON.parse(localStorage.getItem("replateData")||"{}")};
+}catch(e){state={...defaults}}
+
+function save(){
+localStorage.setItem("replateData",JSON.stringify(state));
+updateHeader();
+}
+
+function level(){
+let p=state.points;
+return p>=1000?"Chef Legend":
+p>=800?"Creator":
+p>=600?"Rescuer":
+p>=400?"Pantry Hero":
+p>=200?"Home Cook":
+p>=100?"Sprout":"Seedling";
+}
+
+function updateHeader(){
+document.getElementById("navPoints").textContent=state.points;
+document.getElementById("heroPoints").textContent=state.points;
+document.getElementById("heroLevel").textContent=level();
+
+let pct=state.points%100;
+document.getElementById("ring").style.setProperty("--progress",pct+"%");
+document.getElementById("profileShortcut").textContent=state.points>=500?"👤":"🔒";
+}
+
+function toast(t){
+let el=document.getElementById("toast");
+el.textContent=t;
+el.classList.add("show");
+setTimeout(()=>el.classList.remove("show"),2300);
+}
+
+function confetti(){
+let box=document.getElementById("confetti");
+box.innerHTML="";
+for(let i=0;i<65;i++){
+let p=document.createElement("i");
+p.style.left=Math.random()*100+"%";
+p.style.animationDelay=Math.random()*.6+"s";
+p.style.transform=`rotate(${Math.random()*360}deg)`;
+box.appendChild(p);
+}
+setTimeout(()=>box.innerHTML="",2500);
+}
+
+function earn(n,msg){
+state.points+=n;
+save();
+renderProgress();
+updateHeader();
+toast(msg||`+${n} points earned!`);
+
+if(state.points>=500&&!state.completed.unlocked){
+state.completed.unlocked=true;
+confetti();
+toast("Creator unlocked! Your next chapter starts here.");
+}
+}
+
+function go(page){
+document.querySelectorAll(".page").forEach(p=>
+p.classList.toggle("active",p.id===page)
+);
+
+document.querySelectorAll(".tabs button").forEach(b=>
+b.classList.toggle("active",b.dataset.page===page)
+);
+
+if(page==="progress")renderProgress();
+if(page==="profile")renderProfile();
+
+window.scrollTo({
+top:0,
+behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"
+});
+}
+
+document.querySelectorAll(".tabs button").forEach(b=>
+b.onclick=()=>go(b.dataset.page)
+);
+
+document.getElementById("profileShortcut").onclick=()=>go("profile");
+
+function addIngredients(){
+let val=document.getElementById("ingredientInput").value
+.toLowerCase().split(/[,;]+/).map(x=>x.trim()).filter(Boolean);
+
+val.forEach(x=>{
+if(!state.ingredients.includes(x))state.ingredients.push(x);
+});
+
+document.getElementById("ingredientInput").value="";
+renderIngredients();
+renderRecipes();
+save();
+}
+
+function addChip(x){
+if(!state.ingredients.includes(x))state.ingredients.push(x);
+renderIngredients();
+renderRecipes();
+save();
+}
+
+function removeIngredient(x){
+state.ingredients=state.ingredients.filter(v=>v!==x);
+renderIngredients();
+renderRecipes();
+save();
+}
+
+function safe(s){
+return String(s).replace(/[&<>"']/g,c=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[c]));
+}
+
+function renderIngredients(){
+let list=document.getElementById("ingredientList");
+let emo=document.getElementById("emojiList");
+
+list.innerHTML=state.ingredients.map(x=>
+`<span class="foodtag" onclick="removeIngredient('${safe(x)}')" title="Remove">${emojis[x]||"🥬"} ${safe(x)} ×</span>`
+).join("");
+
+emo.innerHTML=state.ingredients.map(x=>
+`<span class="foodtag" onclick="removeIngredient('${safe(x)}')">${emojis[x]||"🥬"}</span>`
+).join("");
+}
+
+function renderRecipes(){
+let list=recipes.map(r=>({
+...r,
+match:r.items.filter(x=>
+state.ingredients.some(y=>y.includes(x)||x.includes(y))
+).length
+})).sort((a,b)=>b.match-a.match).slice(0,6);
+
+document.getElementById("recipeCount").textContent=
+`${list.filter(r=>r.match).length} matches · Top six`;
+
+document.getElementById("recipeGrid").innerHTML=list.map(r=>
+`<article class="card">
+<div style="font-size:30px">${r.emoji}</div>
+<div class="meta">${r.time} · ${Math.round(r.match/r.items.length*100)}% MATCH</div>
+<h3>${r.name}</h3>
+<p>Uses: ${r.items.join(", ")}<br>
+${r.items.filter(x=>!state.ingredients.some(y=>y.includes(x)||x.includes(y))).length?
+`Missing: ${r.items.filter(x=>!state.ingredients.some(y=>y.includes(x)||x.includes(y))).join(", ")}`:
+"You have the ingredients!"}
+</p>
+<button class="action" onclick="openRecipe('${r.name}')">Cook this ↗</button>
+</article>`
+).join("");
+}
+
+function openRecipe(name){
+let r=recipes.find(x=>x.name===name);
+let modal=document.createElement("div");
+
+modal.id="recipeModal";
+modal.style="position:fixed;inset:0;background:#001d18c9;z-index:60;display:grid;place-items:center;padding:18px";
+
+modal.innerHTML=`
+<div class="glass" style="max-width:560px;width:100%;max-height:85vh;overflow:auto">
+<div class="row" style="justify-content:space-between">
+<h2>${r.emoji} ${r.name}</h2>
+<button class="action" onclick="document.getElementById('recipeModal').remove()">Close</button>
+</div>
+<p class="muted">${r.time} · Tick each step as you go.</p>
+<ol class="recipe-steps">
+${r.steps.map(s=>`<li><label><input type="checkbox" class="stepcheck" onchange="checkSteps()"> ${s}</label></li>`).join("")}
+</ol>
+<button class="primary" id="finishRecipe" disabled onclick="finishRecipe('${r.name}')">Finish cooking · +25 pts</button>
+</div>`;
+
+document.body.appendChild(modal);
+}
+
+function checkSteps(){
+let checks=[...document.querySelectorAll(".stepcheck")];
+document.getElementById("finishRecipe").disabled=!checks.every(c=>c.checked);
+}
+
+function finishRecipe(name){
+document.getElementById("recipeModal").remove();
+state.meals++;
+state.kg=+(state.kg+.4).toFixed(1);
+state.money+=60;
+earn(25,"Meal rescued! +25 points");
+confetti();
+renderProgress();
+}
+
+function findLeftovers(){
+let q=document.getElementById("leftoverInput").value.toLowerCase();
+
+let matches=recipes.filter(r=>
+r.items.some(i=>q.includes(i))||
+q.includes(r.name.toLowerCase().split(" ")[0])
+).slice(0,4);
+
+if(!matches.length)matches=recipes.slice(0,3);
+
+document.getElementById("leftoverResults").innerHTML=
+matches.map(r=>`
+<div class="card">
+<h3>${r.emoji} ${r.name}</h3>
+<p>${r.steps.slice(0,2).join(" ")}</p>
+<button class="action" onclick="openRecipe('${r.name}')">See steps</button>
+</div>
+`).join("")+
+`
+<div class="card">
+<h3>✨ Mix-and-match idea</h3>
+<p>Try a quick stir-fry, soup or toast topping with what you have. Heat cooked leftovers thoroughly and use your judgement about food safety.</p>
+<button class="action" onclick="rescueMeal()">I made this · +10 pts</button>
+</div>`;
+}
+
+function rescueMeal(){
+state.meals++;
+state.kg=+(state.kg+.4).toFixed(1);
+state.money+=60;
+earn(10,"Leftover rescued! +10 points");
+renderProgress();
+}
+
+let factIndex=0;
+
+function nextFact(){
+factIndex=(factIndex+1)%facts.length;
+document.getElementById("fact").textContent=facts[factIndex];
+}
+
+// SORT GAME
+const sortItems=[
+["🍌 Banana peel","Compost"],
+["🫙 Glass jar","Reuse"],
+["📰 Newspaper","Recycle"],
+["🥫 Food tin","Recycle"],
+["🥬 Vegetable scraps","Compost"],
+["🔋 Used battery","Landfill"],
+["🧴 Clean plastic bottle","Recycle"],
+["👕 Old T-shirt","Reuse"],
+["🍂 Dry leaves","Compost"],
+["🧻 Used tissue","Landfill"]
+];
+
+let game={
+idx:0,score:0,combo:0,active:false,timer:null,seconds:6
+};
+
+function startGame(){
+clearInterval(game.timer);
+
+game={
+idx:0,score:0,combo:0,
+active:true,timer:null,seconds:6
+};
+
+document.getElementById("startGame").textContent="Game in progress";
+
+showRound();
+
+game.timer=setInterval(()=>{
+game.seconds--;
+document.getElementById("timerBar").style.width=
+(game.seconds/6*100)+"%";
+
+if(game.seconds<=0)answerSort(null);
+},1000);
+}
+
+function showRound(){
+let item=sortItems[game.idx];
+
+document.getElementById("round").textContent=
+`Round ${game.idx+1} / 10`;
+
+document.getElementById("gameItem").textContent=item[0];
+document.getElementById("gameScore").textContent=game.score;
+document.getElementById("combo").textContent=game.combo;
+document.getElementById("timerBar").style.width="100%";
+
+game.seconds=6;
+}
+
+function answerSort(choice){
+if(!game.active)return;
+
+let correct=sortItems[game.idx][1];
+
+if(choice===correct){
+game.combo++;
+game.score+=10+Math.min(game.combo-1,5)*2;
+document.getElementById("gameHint").textContent="Correct — nice sorting!";
+}else{
+game.combo=0;
+document.getElementById("gameHint").textContent="Not quite. Check local sorting rules too.";
+}
+
+game.idx++;
+
+if(game.idx>=10){
+clearInterval(game.timer);
+game.active=false;
+
+document.getElementById("gameItem").textContent="🎉 Round complete!";
+document.getElementById("gameHint").textContent=
+`You scored ${game.score} points.`;
+
+document.getElementById("startGame").textContent="Play again";
+
+if(game.score)earn(game.score,"Sorting challenge complete!");
+return;
+}
+
+showRound();
+}
+
+// SMART BASKET
+const basketItems=[
+["Milk",5],["Spinach",3],["Tomatoes",6],
+["Bread",4],["Eggs",14],["Carrots",12],
+["Yogurt",7],["Mushrooms",4],["Apples",14],
+["Cooked rice",2]
+];
+
+function renderBasket(){
+let days=+document.getElementById("shopDays").value;
+
+document.getElementById("daysLabel").textContent=days+" days";
+
+let risk=0;
+
+document.getElementById("basketGrid").innerHTML=
+basketItems.map(([n,shelf])=>{
+let fresh=Math.max(0,Math.min(100,(shelf-days)/shelf*100));
+let spoil=shelf<=days;
+
+risk+=spoil?1:0;
+
+return `
+<div class="card">
+<div class="row" style="justify-content:space-between">
+<b>${n}</b>
+<span class="${spoil?"":"gold"}" style="font-size:11px">
+${spoil?`⚠ spoils on day ${shelf}`:`${shelf} day guide`}
+</span>
+</div>
+<div class="fresh">
+<span style="width:${fresh}%;background:${spoil?"var(--red)":"var(--green)"}"></span>
+</div>
+<p>${spoil?"Plan to use this earlier.":"Looks manageable for this plan."}</p>
+</div>`;
+}).join("");
+
+let label=risk>=6?"High":risk>=3?"Medium":"Low";
+
+document.getElementById("riskTitle").textContent="Waste risk: "+label;
+
+document.getElementById("riskText").textContent=
+`${risk} of ${basketItems.length} items may need attention before your next shop. Shelf-life values are illustrative; follow packaging and safe-storage guidance.`;
+}
+
+function saveBasket(){
+earn(20,"Basket plan saved! +20 points");
+state.basketSaved=true;
+save();
+renderProgress();
+}
+
+// PROGRESS DASHBOARD
+function renderProgress(){
+updateHeader();
+
+let stats=[
+["🍽️",state.meals,"Meals rescued"],
+["🌱",state.kg.toFixed(1)+" kg","Food saved · estimate"],
+["₹","₹"+state.money,"Money saved · estimate"],
+["🔥",state.streak+" days","Day streak"]
+];
+
+document.getElementById("statsGrid").innerHTML=
+stats.map(x=>`
+<div class="card">
+<div style="font-size:23px">${x[0]}</div>
+<div class="stat">${x[1]}</div>
+<div class="statlabel">${x[2]}</div>
+</div>
+`).join("");
+
+document.getElementById("progressLevel").textContent=level();
+
+document.getElementById("goalText").textContent=
+`${state.points} / 500 points`;
+
+document.getElementById("goalBar").style.width=
+Math.min(100,state.points/500*100)+"%";
+
+let missions=[
+["Cook one meal",state.meals>=1],
+["Sort five items correctly",game.score>=50],
+["Plan a basket",state.basketSaved],
+["Weekly: cook five meals",state.meals>=5],
+["Weekly: earn 200 points",state.points>=200]
+];
+
+document.getElementById("missionGrid").innerHTML=
+missions.map(m=>`
+<div class="card">
+<div class="row">
+<span>${m[1]?"✅":"◯"}</span>
+<b>${m[0]}</b>
+</div>
+<p>${m[1]?"Mission complete!":"Keep going — every action counts."}</p>
+</div>
+`).join("");
+
+document.getElementById("creatorArea").innerHTML=
+state.points>=500?
+`
+<h3>✍️ Creator blog unlocked</h3>
+<input id="blogTitle" class="field" placeholder="Your recipe title">
+<textarea id="blogBody" class="field" rows="3" placeholder="Share your recipe and food-saving tip..."></textarea>
+<button class="primary" onclick="publishBlog()">Publish locally</button>
+<p class="muted">Posts are saved on this device only. A public creator community needs a server and user accounts.</p>
+${state.blog.map(b=>`
+<div class="card">
+<h3>${safe(b.title)}</h3>
+<p>${safe(b.body)}</p>
+</div>
+`).join("")}
+`
+:
+`
+<div class="lock">🔒</div>
+<h3>Creator corner unlocks at 500 points</h3>
+<p class="muted">${Math.max(0,500-state.points)} points to go. Keep rescuing food to unlock your creator space.</p>
+`;
+}
+
+function publishBlog(){
+let title=document.getElementById("blogTitle").value.trim();
+let body=document.getElementById("blogBody").value.trim();
+
+if(!title||!body){
+toast("Add a title and a few words first.");
+return;
+}
+
+state.blog.unshift({title,body});
+save();
+renderProgress();
+toast("Your post is saved on this device.");
+}
+
+// REUSE AND RECYCLE
+const reuseMap=[
+["plastic","Recycle","Check the recycling symbol and local collection rules. Clean and dry accepted containers. Reuse sturdy bottles only when designed for repeated use.","Do not reuse single-use containers for hot food unless labelled safe."],
+["glass","Reuse","Wash jars and use them for dry storage or organise small household items. Recycle if cracked or not reusable.","Handle broken glass carefully; wrap it before disposal."],
+["t-shirt","Reuse","Turn clean fabric into cleaning cloths, a tote or craft material. Donate wearable clothing.","Keep fabric away from flames and hot cooking surfaces."],
+["battery","E-waste","Keep batteries separate from household waste and take them to an authorised collection point.","Do not crush, puncture or burn batteries."],
+["electronic","E-waste","Use an authorised e-waste collection or take-back programme. Remove personal data before handing over devices.","Do not dismantle electronics or put batteries in regular bins."],
+["oil","Special disposal","Let used cooking oil cool, collect it in a sealed container and check local collection guidance.","Never pour cooking oil down the sink or drain."],
+["peel","Compost","Add suitable fruit and vegetable scraps to a home or community compost system.","Avoid composting meat or dairy unless your system accepts them."],
+["paper","Recycle","Keep clean, dry paper and cardboard separate for collection.","Greasy or food-soiled paper may not be accepted."],
+["shoe","Reuse","Repair, donate wearable shoes or look for a textile collection programme.","Do not donate damaged items that cannot be safely worn."]
+];
+
+function advice(item){
+let x=reuseMap.find(a=>item.toLowerCase().includes(a[0]));
+
+return x||[
+"General reuse",
+"Check whether the item can be repaired, safely reused, donated or accepted by a local recycling programme.",
+"Do not burn, dismantle or dispose of unknown materials in drains or open spaces."
+];
+}
+
+function findReuse(){
+let items=document.getElementById("reuseInput").value
+.split(",").map(x=>x.trim()).filter(Boolean);
+
+document.getElementById("reuseResults").innerHTML=
+items.map(item=>{
+let a=advice(item);
+
+return `
+<div class="card">
+<div class="meta">${a[0]}</div>
+<h3>${safe(item)}</h3>
+<p>${a[1]}</p>
+<div class="notice">Safety: ${a[2]}</div>
+<button class="action" onclick="reuseDone()">I did this · +10 pts</button>
+</div>`;
+}).join("")||'<p class="muted">Enter an item to get started.</p>';
+}
+
+function reuseDone(){
+earn(10,"Nice reuse action! +10 points");
+}
+
+const ideas=[
+"Glass jars","Cardboard boxes","Old cotton clothes",
+"Vegetable peels","Paper bags","Small electronics"
+];
+
+document.getElementById("reuseIdeas").innerHTML=
+ideas.map(x=>`
+<div class="card">
+<h3>${x}</h3>
+<p>Explore repair, reuse, donation or local recycling options.</p>
+<button class="action" onclick="document.getElementById('reuseInput').value='${x}';findReuse()">Explore</button>
+</div>
+`).join("");
+
+// KITCHEN TOOLS
+const tools=[
+["🧤","Cut-resistant gloves","Extra hand protection when preparing food. Use carefully and follow product directions."],
+["🧤","Oven mitts","Protect hands when handling hot cookware."],
+["🥕","Vegetable chopper","A convenient prep tool; use the guard and keep fingers clear of blades."],
+["🥫","Airtight containers","Help organise ingredients and make leftovers easier to see."],
+["🌡️","Food thermometer","Check that food reaches a safe internal temperature."],
+["🧯","Fire blanket","A kitchen safety item. Learn the correct use and keep it accessible."]
+];
+
+document.getElementById("toolsGrid").innerHTML=
+tools.map(t=>`
+<div class="card">
+<div style="font-size:30px">${t[0]}</div>
+<h3>${t[1]}</h3>
+<p>${t[2]}</p>
+<button class="action" onclick="window.open('https://www.google.com/search?tbm=shop&q='+encodeURIComponent('${t[1]}'),'_blank','noopener')">View options ↗</button>
+</div>
+`).join("");
+
+// ADVERTISER DASHBOARD
+function updateAd(){
+let price=+document.getElementById("adSlot").value;
+let weeks=+document.getElementById("weeks").value;
+
+document.getElementById("weeksLabel").textContent=
+weeks+(weeks===1?" week":" weeks");
+
+document.getElementById("adTotal").textContent=
+"₹"+(price*weeks).toLocaleString("en-IN");
+
+let title=document.getElementById("adSlot").selectedOptions[0].text.split(" —")[0];
+
+document.getElementById("previewTitle").textContent=
+title+" · Your brand here";
+}
+
+function bookAd(){
+let slot=document.getElementById("adSlot").selectedOptions[0].text;
+let weeks=document.getElementById("weeks").value;
+let total=document.getElementById("adTotal").textContent;
+
+let subject=encodeURIComponent("Replate advertising enquiry");
+
+let body=encodeURIComponent(
+`Hello Replate,
+
+I am interested in: ${slot}
+Campaign length: ${weeks} weeks
+Sample total: ${total}
+
+Please share availability and confirmed terms.
+
+Thank you.`
+);
+
+window.location.href=
+`mailto:hello@replate.example?subject=${subject}&body=${body}`;
+}
+
+// PROFILE
+function renderProfile(){
+let el=document.getElementById("profileContent");
+
+if(state.points<500){
+el.innerHTML=`
+<div class="lock">🔒</div>
+<h2>Creator profile locked</h2>
+<p class="muted">Reach 500 points to create your profile and publish recipes.</p>
+<div class="bar">
+<span style="width:${Math.min(100,state.points/500*100)}%"></span>
+</div>
+<p class="gold">${500-state.points} points to go</p>
+`;
+return;
+}
+
+el.innerHTML=`
+<div class="row">
+<div style="font-size:48px">${state.profile.avatar}</div>
+<div>
+<h2>${safe(state.profile.name||"Your name")}</h2>
+<p class="muted">${level()} · ${state.points} points</p>
+</div>
+</div>
+
+<label class="muted">Choose an avatar</label>
+
+<div class="chips">
+${["🌿","🍅","🥕","🍋","🍄","🌻"].map(a=>
+`<button class="chip" onclick="setAvatar('${a}')">${a}</button>`
+).join("")}
+</div>
+
+<input class="field" id="profileName" placeholder="Your name" value="${safe(state.profile.name)}" oninput="saveProfile()">
+
+<textarea class="field" id="profileBio" rows="3" placeholder="A little about your food-saving journey..." oninput="saveProfile()">${safe(state.profile.bio)}</textarea>
+
+<div class="grid two">
+<div class="card">
+<div class="stat">${state.meals}</div>
+<div class="statlabel">Meals rescued</div>
+</div>
+
+<div class="card">
+<div class="stat">${state.kg.toFixed(1)} kg</div>
+<div class="statlabel">Food saved · estimate</div>
+</div>
+
+<div class="card">
+<div class="stat">${state.blog.length}</div>
+<div class="statlabel">Recipes / posts published</div>
+</div>
+
+<div class="card">
+<div class="stat">${state.points}</div>
+<div class="statlabel">Total points</div>
+</div>
+</div>
+
+<p class="muted">This profile is stored only in this browser. It is not publicly visible.</p>
+`;
+}
+
+function saveProfile(){
+state.profile.name=document.getElementById("profileName").value;
+state.profile.bio=document.getElementById("profileBio").value;
+save();
+}
+
+function setAvatar(a){
+state.profile.avatar=a;
+save();
+renderProfile();
+}
+
+// INITIALISE
+document.getElementById("chips").innerHTML=
+["rice","egg","tomato","bread","dal","roti","potato","onion"]
+.map(x=>`<button class="chip" onclick="addChip('${x}')">${emojis[x]} ${x}</button>`)
+.join("");
+
+document.getElementById("ingredientInput").addEventListener("keydown",e=>{
+if(e.key==="Enter")addIngredients();
+});
+
+document.getElementById("fact").textContent=facts[0];
+
+renderIngredients();
+renderRecipes();
+renderBasket();
+renderProgress();
+updateAd();
+updateHeader();
+
+window.addEventListener("scroll",()=>{
+let h=document.documentElement;
+
+document.getElementById("topline").style.width=
+(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+"%";
+});
+
+</script>
+</body>
+</html>
